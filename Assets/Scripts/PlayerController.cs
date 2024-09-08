@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip[] CVHurt;
     [Header("掛け声")]
     [SerializeField] AudioClip[] CVYell;
+    [Header("空腹時オーディオ")]
+    [SerializeField] AudioSource audioSourceHunger;
+    [Header("空腹")]
+    [SerializeField] AudioClip[] CVHunger;
     #endregion
 
     #region SatietyGauge
@@ -63,6 +67,9 @@ public class PlayerController : MonoBehaviour
     [Header("満腹度 ジャンプ減少値")]
     [SerializeField] float gaugeDecreaseValueJump = 0.3f;
 
+    [Header("満腹度 回復量")]
+    [SerializeField] float gaugeHealValue = 10f;
+
     #endregion
 
     #region Internal
@@ -73,6 +80,7 @@ public class PlayerController : MonoBehaviour
     int gaugeCount = 0;
     bool isSayCollided = false;
     public static bool isCollided = false;
+    bool isSayHunger = false;
     #endregion
 
     void Start()
@@ -103,7 +111,7 @@ public class PlayerController : MonoBehaviour
             SatietyGaugeUpdate();
             gaugeCount = (int)Variables.zero;
         }
-        if (gaugeCurrentValue<gaugeMin)
+        if (gaugeCurrentValue<=gaugeMin)
         {
             PlayerInoperable();  
         }
@@ -120,6 +128,7 @@ public class PlayerController : MonoBehaviour
     {
         isCollided = false;
         isSayCollided = false;
+        isSayHunger = false;
 
         gameObject.transform.position = PlayerRespawnPos.transform.position;
 
@@ -134,12 +143,18 @@ public class PlayerController : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+    /// <summary>    /// test    /// </summary>
     public void PlayerInoperable()
     {
-        if (!isSayCollided)
+        if (!isSayCollided && isCollided)
         {
             SayCV(audioSourceHurt, CVHurt);
             isSayCollided = true;
+        }
+        else if (!isSayHunger && !isCollided)
+        {
+            SayCV(audioSourceHunger, CVHunger);
+            isSayHunger = true;
         }
         playerRB.velocity = Vector2.down*fallSpeed;
         playerImage.sprite = imageDamaged;
@@ -173,7 +188,20 @@ public class PlayerController : MonoBehaviour
     }
     void SatietyGaugeUpdate()
     {
+        if (gaugeCurrentValue>gaugeMax)
+        {
+            gaugeCurrentValue = gaugeMax;
+        }
+        else if (gaugeCurrentValue < gaugeMin)
+        {
+            gaugeCurrentValue = gaugeMin;
+        }
         satietyGaugeText.SetText(gaugeCurrentValue.ToString("f1"));
         satietyGauge.value = gaugeCurrentValue;
+    }
+    public void SatietyGaugeHeal()
+    {
+        gaugeCurrentValue += gaugeHealValue;
+        SatietyGaugeUpdate();
     }
 }

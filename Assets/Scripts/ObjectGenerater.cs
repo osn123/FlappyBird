@@ -37,6 +37,17 @@ public class ObjectGenerater : MonoBehaviour
 
     #endregion
 
+    #region Item
+    [Header("回復アイテム")]
+    [SerializeField] GameObject healItem;
+    [Header("上限値")]
+    [SerializeField] float genItemUpperLimit = 1f;
+    [Header("下限値")]
+    [SerializeField] float genItemLowerLimit = 1f;
+    [Header("出現位置")]
+    [SerializeField] float genItemHorizontalGap = 1f;
+    #endregion
+
     #region Internal
     Vector2 screenMin, screenMax;
     #endregion
@@ -57,6 +68,8 @@ public class ObjectGenerater : MonoBehaviour
     void ObjectGenerate()
     {
         float _generatePoint = Random.Range(screenMax.y, topLowerLimit);
+        float _generateItemPoint = Random.Range(screenMin.y + genItemLowerLimit,
+            screenMax.y - genItemUpperLimit);
 
         Instantiate(pipeTop,
             new Vector2(transform.position.x, _generatePoint),
@@ -70,5 +83,8 @@ public class ObjectGenerater : MonoBehaviour
             new Vector2(transform.position.x, transform.position.y),
             Quaternion.identity);
 
+        Instantiate(healItem,
+    new Vector2(transform.position.x + genItemHorizontalGap, _generateItemPoint),
+            Quaternion.identity);
     }
 }
