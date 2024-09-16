@@ -22,10 +22,12 @@ public class GameManager : MonoBehaviour
 
     #region Internal
     PlayerController playerController;
+
     int score = 0;
 
-    bool isGamePause = false;
+    public static bool isGamePause = false;
     public static bool isGameOver = false;
+
     public const float gamePause = 0;
     public const float gamePauseRelease = 1;
     #endregion

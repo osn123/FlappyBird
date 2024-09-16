@@ -92,6 +92,10 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.isGamePause)
+        {
+            return;
+        }
         if (!isCollided)
         {
             if (Input.GetKey(KeyCode.F)|| Input.GetMouseButtonDown(0))
