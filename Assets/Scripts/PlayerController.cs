@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
     bool isSayCollided = false;
     public static bool isCollided = false;
     bool isSayHunger = false;
+    bool isButtonPressed = false;
+
     #endregion
 
     void Start()
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
         }
         if (!isCollided)
         {
-            if (Input.GetKey(KeyCode.F)|| Input.GetMouseButtonDown(0))
+            if (Input.GetKey(KeyCode.F)|| isButtonPressed)
             {
                 Jump();
             }
@@ -207,5 +209,14 @@ public class PlayerController : MonoBehaviour
     {
         gaugeCurrentValue += gaugeHealValue;
         SatietyGaugeUpdate();
+    }
+
+    public void OnPointerDown()
+    {
+        isButtonPressed = true;
+    }
+    public void OnPointerUp()
+    {
+        isButtonPressed = false;
     }
 }
