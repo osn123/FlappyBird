@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,11 +33,18 @@ public class GameManager : MonoBehaviour
     public const float gamePauseRelease = 1;
     #endregion
 
+    public Text countdownText;
+
     void Start()
     {
         Application.targetFrameRate = 60;
         playerController = GameObject.FindWithTag(Variables.tagPlayer).GetComponent<PlayerController>();
         UpdateScoreUI();
+        //Time.timeScale = gamePause;
+        //Invoke("SetTimeScale", 3);
+        //GamePause();
+        //Invoke("GamePauseRelease", 3);
+        StartCoroutine(DelayCoroutine());
     }
     void Update()
     {
@@ -70,6 +78,27 @@ public class GameManager : MonoBehaviour
             GameQuit();
         }
     }
+
+    private IEnumerator DelayCoroutine()
+    {
+        Time.timeScale = 0;
+        isGamePause = true;
+
+        for (int i = 3; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        countdownText.text = "GO!";
+        yield return new WaitForSecondsRealtime(1);
+
+        countdownText.text = "";
+        Time.timeScale = 1;
+        isGamePause = false;
+    }
+
+
     public void GamePause()
     {
         isGamePause = true;
