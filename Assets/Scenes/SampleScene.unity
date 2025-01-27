@@ -2023,7 +2023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u306D"
+  m_text: "D \u30DC\u30BF\u30F3\u3067\u30EA\u30C8\u30E9\u30A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 984bc697a12925f468a54076cca5a2c7, type: 2}
   m_sharedMaterial: {fileID: 21183639456837166, guid: 984bc697a12925f468a54076cca5a2c7, type: 2}
@@ -2787,7 +2787,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "ESC \u30DC\u30BF\u30F3\u3067\u518D\u958B"
+  m_text: "S \u30DC\u30BF\u30F3\u3067\u518D\u958B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 984bc697a12925f468a54076cca5a2c7, type: 2}
   m_sharedMaterial: {fileID: 21183639456837166, guid: 984bc697a12925f468a54076cca5a2c7, type: 2}
@@ -2950,7 +2950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.43173724, g: 0.69431543, b: 0.9245283, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2958,12 +2958,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: 585188cdc4600544eb408bee749e4b3a, type: 3}
+    m_FontSize: 200
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 100
+    m_MinSize: 0
+    m_MaxSize: 200
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

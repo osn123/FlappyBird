@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class GameManager : MonoBehaviour
 {
     #region UI
@@ -34,55 +35,57 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public Text countdownText;
+    private Input playerInput;
+    bool startFlg = false;
 
     void Start()
     {
         Application.targetFrameRate = 60;
         playerController = GameObject.FindWithTag(Variables.tagPlayer).GetComponent<PlayerController>();
         UpdateScoreUI();
-        //Time.timeScale = gamePause;
-        //Invoke("SetTimeScale", 3);
-        //GamePause();
-        //Invoke("GamePauseRelease", 3);
+
         StartCoroutine(DelayCoroutine());
     }
     void Update()
     {
-        if (isGameOver)
+        if (startFlg)
         {
-            GameOver();
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (isGameOver)
             {
-                GameRetry();
-            }
-        }
-        else
-        {
-            if (!isGamePause)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                GameOver();
+                if (Input.GetKeyDown(KeyCode.D))
                 {
-                    GamePause();
+                    GameRetry();
                 }
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (!isGamePause)
                 {
-                    GamePauseRelease();
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        GamePause();
+                    }
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        GamePauseRelease();
+                    }
                 }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameQuit();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameQuit();
+            }
         }
     }
 
     private IEnumerator DelayCoroutine()
     {
         Time.timeScale = 0;
-        isGamePause = true;
+        isGamePause = true;     
 
         for (int i = 3; i > 0; i--)
         {
@@ -96,6 +99,7 @@ public class GameManager : MonoBehaviour
         countdownText.text = "";
         Time.timeScale = 1;
         isGamePause = false;
+        startFlg = true;
     }
 
 
