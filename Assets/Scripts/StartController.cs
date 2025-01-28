@@ -21,6 +21,6 @@ public class StartController : MonoBehaviour
     IEnumerator LoadGameSceneAfterDelay()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
     }
 }
