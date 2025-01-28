@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -32,44 +34,75 @@ public class GameManager : MonoBehaviour
     public const float gamePauseRelease = 1;
     #endregion
 
+    public Text countdownText;
+    private Input playerInput;
+    bool startFlg = false;
+
     void Start()
     {
         Application.targetFrameRate = 60;
         playerController = GameObject.FindWithTag(Variables.tagPlayer).GetComponent<PlayerController>();
         UpdateScoreUI();
+
+        StartCoroutine(DelayCoroutine());
     }
     void Update()
     {
-        if (isGameOver)
+        if (startFlg)
         {
-            GameOver();
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (isGameOver)
             {
-                GameRetry();
-            }
-        }
-        else
-        {
-            if (!isGamePause)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                GameOver();
+                if (Input.GetKeyDown(KeyCode.D))
                 {
-                    GamePause();
+                    GameRetry();
                 }
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (!isGamePause)
                 {
-                    GamePauseRelease();
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        GamePause();
+                    }
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        GamePauseRelease();
+                    }
                 }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameQuit();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameQuit();
+            }
         }
     }
+
+    private IEnumerator DelayCoroutine()
+    {
+        Time.timeScale = 0;
+        isGamePause = true;     
+
+        for (int i = 3; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        countdownText.text = "GO!";
+        yield return new WaitForSecondsRealtime(1);
+
+        countdownText.text = "";
+        Time.timeScale = 1;
+        isGamePause = false;
+        startFlg = true;
+    }
+
+
     public void GamePause()
     {
         isGamePause = true;
